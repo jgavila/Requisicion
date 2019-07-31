@@ -168,7 +168,7 @@
                                         <button id="imprimir" type="button" class="btn btn-success" disabled="disabled" onclick="imprimir()" style="padding-right: 60px;padding-left: 60px;">Descargar</button>
                                     </span>
                         </div>
-                        <!-- Modal -->
+                        <!-- Modal de la firma-->
                         <div id="myModal" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <!-- Modal content-->
@@ -219,7 +219,7 @@
                                                     <br />
                                                 <span>
                                                  <button class="btn btn-info" type="button" style="width:250px;height:35px" onclick="verificarAntesDeBuscar()">BUSCAR</button>
-                                                 <button id="btnSubmit" class="btn btn-info" type="submit" style="width:250px;height:35px">btn invisible</button>
+                                                 <button id="btnSubmit" class="btn btn-info" type="submit" style="width:250px;height:35px; display: none;">btn invisible</button>
                                                 </span>
                                               
                                             </center>
@@ -264,11 +264,11 @@
         let valor = document.getElementById("txtbuscar").value;
         let rtn = false;
         rtn = await getJson('@(Url.Action("VerificarTicket", "Home"))', {ticket: valor});
-        //si ya existe el ticket retorna false y mostramos el mensaje
-        //alert("Ticket existente");
-        if(rtn){
-            //si retorna true econtró al ticket
-            alert("Ticket existente, ingrese otro.");
+       
+        //si retorna un mensaje, muestra ese error
+        if(rtn!== ""){
+            //si retorna false econtró al ticket
+            alert(rtn);
         }else{
             let botonSubmit = document.getElementById("btnSubmit");
             botonSubmit.click();
@@ -436,6 +436,7 @@
                 }
             }
             //alert(imagen.value);
+            $("#myModal").modal("hide");
         }
 
 
@@ -509,8 +510,6 @@
 
            window.open('http://ptycwclsql/ReportServer_CWISEARIS/Pages/ReportViewer.aspx?%2fCustom%2fRequisicion&rs:Command=Render&rs:Format=PDF&' + 'ticket=@ViewBag.ticket');
            window.location.href = 'Home/Index';
-
-
 
 
             @*window.open('Home/Reporte?'

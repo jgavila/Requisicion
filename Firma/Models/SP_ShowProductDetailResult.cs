@@ -19,7 +19,7 @@ namespace Firma.Models
         public decimal Despachado { get; set; }
         public decimal Costo_Total { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:0.00}")]
+        //[DisplayFormat(DataFormatString = "{0:0.00}")]
         public decimal Total { get; set; }
     }
 }

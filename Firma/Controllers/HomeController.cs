@@ -28,10 +28,47 @@ namespace Firma.Controllers
 
         public ActionResult VerificarTicket(int ticket) {
 
-            var prueba = ticket;
-            //aqui vuscamos el ticket en la base,
-            //si existe el ticket en la base, retorna true  sino false
-            return Json(false);
+            using (var dbContext = new ModelMain())
+            {
+                var ticketString = ticket.ToString();
+
+                var listaTicket = dbContext.SP_ShowTiecktDetail(ticketString);
+
+                //SI  EXISTE EN EL SP
+                if (listaTicket.Count > 0)
+                {
+                    //
+                    //aqui vuscamos el ticket en la base,
+                    var detalleTicket = dbContext.Requisicion_TicketDetail.Where(x => x.Ticket == ticketString).Select(x => x).ToList();
+
+                    // si encontró el ticket EN LA BASE QUE GUARDA entonces retorna false ( ya está despacahado )
+                    if (detalleTicket.Count > 0)
+                    {
+                        //YA NO DEBE AVANZAR A LA PAGINA
+                        return Json("Reporte " + ticket + " ya ha sido despachado.");
+                    }
+                    else
+                    {
+                        //aqui hay que validad que despachado solamente debe mostrar si es mayor a 0 
+
+                        var fila = dbContext.SP_ShowProductDetail(ticketString);
+
+                        if (fila.Count == 0)
+                        {
+                            return Json("El reporte " + ticket + " no tiene productos despachados.");
+                        }
+
+                        //hay en el sp pero no en la base , entonces si debe dejar acvanzar 
+                        return Json("");
+                    }
+                }
+                else
+                {
+                    //no existe en el SP, retorna false
+                    return Json("Reporte " + ticket + " no existe.");
+                }
+            }
+ 
         }
 
         public ActionResult Index(string ticket)
@@ -120,7 +157,7 @@ namespace Firma.Controllers
 
                 //Guardar los cambios (esto ejecuta los insert o update necesarios)
                 db.SaveChanges();
-                return Json(new {  rtn = "OK"});
+                return Json(new {  rtn = "Informacion del Ticket ha sido Guardado"});
             }
             catch (Exception e)
             {
