@@ -38,13 +38,15 @@ namespace Firma.Controllers
                 if (listaTicket.Count > 0)
                 {
                     //
-                    //aqui vuscamos el ticket en la base,
+                    //aqui buscamos el ticket en la base,
                     var detalleTicket = dbContext.Requisicion_TicketDetail.Where(x => x.Ticket == ticketString).Select(x => x).ToList();
 
                     // si encontró el ticket EN LA BASE QUE GUARDA entonces retorna false ( ya está despacahado )
                     if (detalleTicket.Count > 0)
                     {
                         //YA NO DEBE AVANZAR A LA PAGINA
+                                               
+     
                         return Json("Reporte " + ticket + " ya ha sido despachado.");
                     }
                     else
@@ -53,8 +55,9 @@ namespace Firma.Controllers
 
                         var fila = dbContext.SP_ShowProductDetail(ticketString);
 
-                        if (fila.Count == 0)
+                        if (fila.Count ==0)
                         {
+
                             return Json("El reporte " + ticket + " no tiene productos despachados.");
                         }
 
@@ -157,7 +160,7 @@ namespace Firma.Controllers
 
                 //Guardar los cambios (esto ejecuta los insert o update necesarios)
                 db.SaveChanges();
-                return Json(new {  rtn = "Informacion del Ticket ha sido Guardado"});
+                return Json(new {  rtn = "Reporte de requisicion ha sido guardado"});
             }
             catch (Exception e)
             {
