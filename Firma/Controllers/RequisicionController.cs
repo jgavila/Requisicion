@@ -90,7 +90,8 @@ namespace Firma.Controllers
                 {
                     dato.Cant_Solicitada = (Int32)dato.Cant_Solicitada;
                     dato.Despachado = (Int32)dato.Despachado;
-                    dato.Costo_Total = decimal.Parse(dato.Cost_Unitario) * dato.Despachado;
+                    //dato.Costo_Total = decimal.Parse(dato.Cost_Unitario) * dato.Despachado;
+                    dato.Costo_Total = dato.Cost_Unitario * dato.Despachado;
                     totalFinal += dato.Costo_Total;
                     dato.Costo_Total = decimal.Round(dato.Costo_Total, 2);
                 }
@@ -136,8 +137,11 @@ namespace Firma.Controllers
                 foreach (var dato in datosTempg)
                 {
 
-                    dato.Costo_Total = decimal.Parse(dato.Cost_Unitario) * dato.Despachado;
+                    //dato.Costo_Total = decimal.Parse(dato.Cost_Unitario) * dato.Despachado;
+                    dato.Costo_Total = dato.Cost_Unitario * dato.Despachado;
                     tsuma += dato.Costo_Total;
+                    tsuma += dato.Costo_Total;
+
                 }
                 detail.Total = tsuma;
 
@@ -155,7 +159,8 @@ namespace Firma.Controllers
                     prod.Cant_solicitada = item.Cant_Solicitada;
                     prod.Costo_Unitario = item.Cost_Unitario;
                     prod.Despachados = Convert.ToInt32(item.Despachado);
-                    prod.Costo_Total = decimal.Parse(prod.Costo_Unitario) * prod.Despachados;
+                    //prod.Costo_Total = decimal.Parse(prod.Costo_Unitario) * prod.Despachados;
+                    prod.Costo_Total = prod.Costo_Unitario * prod.Despachados;
 
                     //Agregar el registro
 

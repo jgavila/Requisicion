@@ -1,0 +1,277 @@
+﻿@model IEnumerable<Firma.SP_Req_MRebaja_Result>
+   
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Modulo Rebaja <small>Rebaja de Prodcutos</small></h1>
+            <ol class="breadcrumb">
+                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                <li class="active">Rebaja</li>
+            </ol>
+        </div>
+
+    </div><!-- /.row -->
+
+    @if (ViewBag.validate != null)
+    {
+
+        <button id="Descarga" class="btn btn-warning" type="button" onclick="Save()">Descargar</button>
+        
+        <input type="button" class="btn btn-primary" value="Atras" onclick="@("window.location.href='" + @Url.Action("Index", "MRebaja") + "'");" />
+
+
+
+        <br>
+        <br>
+
+        <table class="table table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th> Ticket </th>
+                    <th> Cliente</th>
+                    <th width="12%"> Id_Producto </th>
+                    <th> Descripcion </th>
+                    <th> Dept </th>
+                    <th> Cant</th>
+                    <th> C/U </th>
+                    <th> Total </th>
+
+                    @*<th> Bodega </th>*@
+                    <th width="12%">  Bin </th>
+                    <th> Contrato </th>
+
+                    @*<th> Quantity_Picked </th>*@
+
+                    <th>Desp</th>
+                    <th>  Fecha Shipping  </th>
+                    <th>  Proyecto   </th>
+
+                    @*<th> Summary_Ticket </th>
+                        <th>  Board  </th>
+                        <th>  Configuracion </th>
+                        <th>  Numero_Serie </th>
+                        <th> Modelo  </th>
+                        <th> Oportunidad </th>
+
+                        <th> Fecha_Creacion </th>
+                        <th> Fecha_Cierre </th>*@
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.C__de_Ticket)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cliente)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Item_Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descripcion_Producto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Departamento)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cantidad)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Costo_Unitario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Costo_Total)
+                        </td>
+                        @*<td>
+                                    @Html.DisplayFor(modelItem => item.Bodega)
+                            </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Bin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Contrato)
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.Quantity_Picked)
+                            </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity_Shipped)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fecha_Shipping)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Proyecto)
+                        </td>
+                      
+                    </tr>
+                }
+                <tr>
+
+                    <th colspan="7">TOTAL</th>
+                    <th style="text-align: right"> @ViewBag.Total</th>
+                    <th colspan="5"></th>
+
+
+                </tr>
+            </tbody>
+
+        </table>
+
+
+
+
+    }
+    else
+    {
+
+        using (Html.BeginForm("Index", "MRebaja", FormMethod.Post, new { @id = "validate" }))
+        {
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="finicio">Fecha Desde</label>
+                    <input type="text" id="finicio" class="form-control" name="finicio" readonly>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="ffinal">Fecha Hasta</label>
+                    <input type="text" id="ffinal" class="form-control" name="ffinal" readonly>
+                </div>
+
+                <div class="form-group col-lg-12">
+                    <label>Departamento</label>
+                    <select class="form-control" id="list" onchange="Dropdown(this)" name="list">
+                        <option value="Alta Disponibilidad">Alta Disponibilidad</option>
+                        <option value="ATM">ATM</option>
+                        <option value="Outsourcing">Contrato de Impresion</option>
+                        <option value="Microsistema">Microsistema</option>
+                    </select>
+                </div>
+                <div class="form-group col-lg-12">
+                    <label>Detatalle del Gasto</label>
+                    <input type="text" class="form-control" id="dgasto" name="dgasto" readonly>
+                </div>
+
+                <div class="form-group col-lg-12">
+                    <label>Cuenta a Cargar</label>
+                    <input type="text" class="form-control" id="ccargar" name="ccargar" readonly>
+                </div>
+
+                <script language="javascript">
+                    function Dropdown(listSelect) {
+                        var val;
+                        var val1;
+
+                        switch (listSelect.options[listSelect.selectedIndex].value) {
+                            case 'Alta Disponibilidad': val = 'Partes para mantenimiento'
+                                val1 = "6245-0800-0080-000"; break;
+                            case 'ATM': val = 'Partes para mantenimiento'
+                                val1 = " 6255-0800-0080-000"; break;
+                            case 'Outsourcing': val = 'Servicio de Impresion Administrada'
+                                val1 = "5500-4400-0405-002"; break;
+                            case 'Microsistema': val = 'Partes para mantenimiento'
+                                val1 = "6225-0800-0080-000"; break;
+
+                        }
+                        document.getElementById('dgasto').value = val;
+                        document.getElementById('ccargar').value = val1;
+                    }
+
+                    Dropdown(document.getElementById('list'));
+                </script>
+
+
+            </div>
+            <div class="form-group col-lg-12">
+
+                <button id="submit" type="submit" class="btn btn-success">Buscar</button>
+
+            </div>
+        }
+    }
+
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#validate').on('submit', function (event) {
+            if ($('#finicio').val() == '' || $('#ffinal').val() == '') {
+                alertify.error("Escoja las fechas antes de hacer la busqueda,");
+                event.preventDefault();
+            }
+
+        });
+
+    })
+
+    $(function () {
+        $('#finicio').datepicker({
+            autoclose: true,
+            format: "yyyy-mm-dd",
+
+        });
+
+    });
+
+
+    $(function () {
+        $('#ffinal').datepicker({
+            autoclose: true,
+            format: "yyyy-mm-dd",
+        });
+    });
+
+    
+
+</script>
+
+<script>
+
+    
+
+    function Save() {
+
+        let header={
+            finicio: '@ViewBag.finicio',
+            ffinal: '@ViewBag.ffinal',
+            list: '@ViewBag.list',
+            dgasto: '@ViewBag.dgasto',
+            ccargar: '@ViewBag.ccargar',
+            Total:'@ViewBag.Total'
+            
+        }
+
+        $.ajax({                     
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: "MRebaja/SaveInfo",
+            data: JSON.stringify(header),
+            dataType: "json",
+            success: function (data) {
+                //aqui viene el mensaje
+                alertify.success(data.rtn);
+                setTimeout(function () {// wait for 5 secs(2)
+                    location.reload(); // then reload the page.(3)
+                }, 2000);
+                             
+            },
+            error: function (result) {
+                console.log(result);
+            }
+        });
+
+    }
+       
+</script>

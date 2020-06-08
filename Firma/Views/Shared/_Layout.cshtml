@@ -1,12 +1,22 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Requisicion</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+
+    <script src="~/Scripts/alertify.min.js"></script>
+    <link rel="stylesheet" href="~/Content/alertifyjs/alertify.min.css" />
+    <link rel="stylesheet" href="~/Content/alertifyjs/themes/default.min.css" />
+
+    <script type="text/javascript" src='~/Scripts/jquery-3.3.1.min.js'></script>
+    <script type="text/javascript" src='~/Scripts/bootstrap.min.js'></script>
+
+    <link rel="stylesheet" href="~/Content/bootstrap-datepicker.css" type="text/css" />
+    <script src="~/Scripts/bootstrap-datepicker.js" type="text/javascript"></script>
+
 </head>
 <body>
 
@@ -27,20 +37,16 @@
                 <ul class="nav navbar-nav">
 
                     <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Requisiciones", "Index", "Requisicion")</li>
-                    @*<li><a href="http://10.1.5.97/Inventarios/Home.aspx">Inventarios</a></li>*@
-                    
-
+                    <li>@Html.ActionLink("Requisicion", "Index", "Requisicion")</li>
+                    <li>@Html.ActionLink("Reporte", "Index", "Reporte")</li>
+                    <li>@Html.ActionLink("Rebaja", "Index", "MRebaja")</li>
+                    <li>@Html.ActionLink("Despacho", "Index", "MDesp")</li>
 
                 </ul>
             </div>
         </div>
     </div>
-
-
-
-
-
+ 
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -48,9 +54,19 @@
             <p>&copy; @DateTime.Now.Year - TECNASA</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+     
     @RenderSection("scripts", required: false)
+
+    <script>
+
+        $("#myHref").on('click', function (event) {
+            event.preventDefault();
+            document.getElementById(".myDiv").style.flexGrow = "5";
+            window.location = "http://www.google.com";
+        });
+
+    </script>
+
+
 </body>
 </html>

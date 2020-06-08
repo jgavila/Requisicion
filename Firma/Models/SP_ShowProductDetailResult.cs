@@ -15,7 +15,7 @@ namespace Firma.Models
         public string Descripcion { get; set; }
         public decimal Cant_Solicitada { get; set; }
 
-        public string Cost_Unitario { get; set; }
+        public decimal Cost_Unitario { get; set; }
         public decimal Despachado { get; set; }
         public decimal Costo_Total { get; set; }
 

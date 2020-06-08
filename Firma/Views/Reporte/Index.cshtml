@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "Reporte";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Tecnasa S.A <small> Bienvenido</small></h1>
+            <ol class="breadcrumb">
+                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                <li class="active">Reporte</li>
+            </ol>
+        </div>
+    </div><!-- /.row -->
+    <div class="row">
+
+        <div class="col-sm-7">
+            <h3>Descargar Reporte</h3>
+            <p>Escoja la fecha desde y fecha hasta para ver los datos que se registraron entre esos días y luego Click en Descargar</p>
+            <br />
+            <form id="formid" method="POST" role="form">
+                <div class="row">
+                    <div class="form-group col-lg-4">
+                        <label for="finicio">Fecha Desde</label>
+                        <input type="text" id="finicio" class="form-control"  name="finicio" readonly>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="ffinal">Fecha Hasta</label>
+                        <input type="text" id="ffinal" class="form-control" name="ffinal" readonly>
+                    </div> 
+                    <div class="form-group col-lg-12">
+                        <input type="hidden" value="contact" name="save">
+                        <button id="submit" class="btn btn-primary" type="submit">Descargar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+         
+        <div class="col-sm-5">
+            <div class="well">
+                <h3>Departamento de Inventario</h3>
+                <h4>Panama</h4>
+                <p>
+                    Office Park N° 10.<br>
+                    Calle Rubén Darío, Panamá<br>
+                </p>
+
+            </div>
+        </div>
+    </div><!-- /.row -->
+    
+</div>
+ 
+<script type="text/javascript">
+    
+    $(function () {
+        $('#formid').on('submit', function (event) {
+            if ($('#finicio').val() == '' || $('#ffinal').val() == '') {
+                alertify.error("Escoja las fechas antes de descargar,");
+                event.preventDefault();
+            }
+             
+        } );
+        
+    })
+    
+     
+    $(function () {
+        $('#finicio').datepicker({
+            autoclose: true,
+            format: "yyyy-mm-dd",
+
+        });
+
+    });
+
+
+    $(function () {
+        $('#ffinal').datepicker({
+            autoclose: true,
+            format: "yyyy-mm-dd",
+        });
+    });
+
+     
+</script>

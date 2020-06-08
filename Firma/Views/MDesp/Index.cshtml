@@ -1,0 +1,564 @@
+﻿
+@model List<Firma.Req_Desp_Detail>
+
+
+<style type="text/css">
+    .centrador {
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        margin: 0 0 auto;
+        margin-top: auto;
+        text-align: center;
+        padding-top: 10px;
+    }
+
+
+    .canvasStyle {
+        border: 1px solid #CCC;
+        border-radius: 5px;
+        position: relative;
+    }
+
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        border-radius: 0.5em
+    }
+
+</style>
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@*<br class="container">*@
+<div class="row">
+
+    <div class="col-lg-12">
+        <h1 class="page-header">Formulario De Constancia <small>Despacho</small></h1>
+        <ol class="breadcrumb">
+            <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+            <li class="active">Modulo Despacho</li>
+        </ol>
+    </div>
+
+    <div class="form-group">
+
+        <div class="form-group col-lg-5">
+            <label>Tipo de constancia</label>
+
+            @Html.DropDownList("tconstlist", (IEnumerable<SelectListItem>)ViewData["tconstDropDown"], new { @class = "form-control" })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="form-group col-lg-5">
+            <label>Sucursal</label>
+            @Html.DropDownList("sucursal", (IEnumerable<SelectListItem>)ViewData["sucursalDropDown"], new { @class = "form-control" })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="form-group col-lg-5">
+            <label>Solicitado por</label>
+            @Html.TextBox("solicitadox", null, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-group col-lg-2">
+            <label>Desde</label>
+            @Html.DropDownList("desde", (IEnumerable<SelectListItem>)ViewData["desdeDropDown"], new { @class = "form-control" })
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-group col-lg-2">
+            <label>Hacia</label>
+            @Html.DropDownList("hacia", (IEnumerable<SelectListItem>)ViewData["haciaDropDown"], new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-group col-lg-5">
+            <label>Departamento</label>
+            @Html.DropDownList("dept", (IEnumerable<SelectListItem>)ViewData["deptDropDown"], new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="form-group col-lg-2">
+            <label>Total</label>
+            @Html.TextBox("Total", null, new { @class = "form-control", @readonly = "readonly" })
+
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+
+    <div class="col-lg-12">
+
+        @*<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Detalle de Productos</button>
+        <br />
+        <br />
+        <div id="demo" class="collapse">
+
+        </div>*@
+        <table id="tblproducto" class="table table-striped table-bordered table-sm">
+            <thead>
+                <tr>
+
+                    <th>Número de Parte</th>
+                    <th>Descripción</th>
+                    <th>Número de Serie</th>
+                    <th>Cantidad Solicitada</th>
+                    <th>Cantidad Despachada</th>
+                    <th>Costo</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <td><input type="text" id="txtNum_parte" /></td>
+                    <td><input type="text" id="txtDescripcion" /></td>
+                    <td><input type="text" id="txtNum_serie" /></td>
+                    <td><input type="text" id="txtCant_solic" /></td>
+                    <td><input type="text" id="txtCant_desp" /></td>
+                    <td><input type="text" id="txtCosto" /></td>
+                    <td><input type="text" id="txtTotaltbl" readonly /></td>
+
+                    <td><input type="button" id="btnAdd" value="Ok" class="btn btn-success" /></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</div>
+
+<div class="form-group">
+    <label>Referencia</label>
+    <div class="form-group col-lg-12">
+
+        @Html.TextArea("referencia", null, new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label>Notas Inventario</label>
+    <div class="form-group col-lg-12">
+
+        @Html.TextArea("notas", null, new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="panel-body">
+    <div class="col-md-4 table-bordered">
+        <center><img id="firmaImagen3" name="firmaImagen3" style="width: 350px;height: 135px;" /></center>
+        <br />
+        <center>
+            @Html.DropDownList("TxtEntregadox", (IEnumerable<SelectListItem>)ViewData["TxtEntregadoxDropDown"], new { @class = "form-control" })
+        </center>
+
+        <br />
+        <center>
+            <button id="firma3" type="button" class="btn btn-info btn-sm btn-block" style="padding: 7px;" data-toggle="modal" data-target="#myModal" onclick="setearFirmaActual(this)">ENTREGADO POR</button>
+        </center>
+        <br />
+
+    </div>
+    <div class="col-md-4 table-bordered">
+
+        <center><img id="firmaImagen2" style="width: 350px;height: 135px;" /></center>
+        <br />
+        <center>
+            @Html.DropDownList("TxtVerificadox", (IEnumerable<SelectListItem>)ViewData["TxtVerificadoxDropDown"], new { @class = "form-control" })
+        </center>
+        <br />
+        <center>
+            <button id="firma2" type="button" style="padding: 6px" class="btn btn-info btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="setearFirmaActual(this)">VERIFICADO POR</button>
+        </center>
+        <br />
+
+    </div>
+    <div class="col-md-4 table-bordered">
+        <center><img id="firmaImagen1" style="width: 350px;height: 135px;" /></center>
+        <br />
+        <div class="caption">
+            <center>
+
+                @Html.TextBox("TxtRecibidox", null, new { @class = "form-control" })
+
+            </center>
+
+            <br />
+            <center>
+                <button id="firma1" type="button" style="padding: 6px" class="btn btn-info btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="setearFirmaActual(this)">RECIBIDO POR</button>
+            </center>
+            <br />
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        Modal content
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">TECNASA S.A</h4>
+            </div>
+            <div id="modal-contenido" class="modal-body">
+
+                <div class='centrador'>
+                    <p>FIRMA</p>
+                    <button type='button' class="btn btn-danger" onclick='LimpiarTrazado()'>Limpiar Pizarra</button>
+                    <button type='button' class="btn btn-success" onclick='GuardarTrazado()'>Guardar</button>
+                    <input type='hidden' name='imagen' id='imagen' />
+                </div>
+                <div class='centrador'>
+                    <canvas id='canvas' class="canvasStyle" width="500" height="200" style="width:500px; height:200px">
+                        <p>Tu navegador no soporta canvas</p>
+                    </canvas>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br />
+<br />
+<div class="row">
+    <div class="form-group col-lg-12">
+
+        <button type="button" id="btnsubmit" class="btn btn-success" onclick="Guardar()">Guardar</button>
+
+    </div>
+</div>
+<br />
+
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section scripts {
+
+    <script>
+
+        var firmaActual = null;
+        var firma1 = null;
+        var firma2 = null;
+        var firma3 = null;
+
+        /* Variables de Configuracion */
+        var creado = false;
+        var idCanvas = 'canvas';
+        var idForm = 'formCanvas';
+        var idModalBody = 'modal-contenido';
+        var inputImagen = 'imagen';
+        var estiloDelCursor = 'crosshair';
+        var colorDelTrazo = '#5estiloDelCursor55';
+        var colorDeFondo = '#fff';
+        var grosorDelTrazo = 2;
+        var widthCanvas = 400;
+        var heightCnvas = 200;
+        /* Variables necesarias */
+        var contexto = null;
+        var valX = 0;
+        var valY = 0;
+        var flag = false;
+        var imagen = document.getElementById(inputImagen);
+        try {
+            var anchoCanvas = document.getElementById(idModalBody).offsetWidth;
+            var altoCanvas = document.getElementById(idModalBody).offsetHeight;
+            var pizarraCanvas = document.getElementById(idCanvas);
+        } catch (e) {
+
+        }
+
+
+        /* Esperamos el evento load */
+        //window.addEventListener('load', IniciarDibujo, false);
+
+        function setearFirmaActual(args) {
+            firmaActual = args.id;
+            LimpiarTrazado();
+        }
+
+        $('#myModal').on('shown.bs.modal', function (e) {
+            if (!creado) IniciarDibujo();
+        });
+
+
+        function IniciarDibujo() {
+            /* Creamos la pizarra */
+            creado = true;
+            anchoCanvas = document.getElementById(idModalBody).offsetWidth;
+            altoCanvas = document.getElementById(idModalBody).offsetHeight;
+
+
+            pizarraCanvas.style.cursor = estiloDelCursor;
+            contexto = pizarraCanvas.getContext('2d');
+            contexto.fillStyle = colorDeFondo;
+            contexto.fillRect(0, 0, anchoCanvas, altoCanvas);
+            contexto.strokeStyle = colorDelTrazo;
+            contexto.lineWidth = grosorDelTrazo;
+            contexto.lineJoin = 'round';
+            contexto.lineCap = 'round';
+            /* Capturamos los diferentes eventos */
+            pizarraCanvas.addEventListener('mousedown', MouseDown, false);
+            pizarraCanvas.addEventListener('mouseup', MouseUp, false);
+            pizarraCanvas.addEventListener('mousemove', MouseMove, false);
+            pizarraCanvas.addEventListener('touchstart', TouchStart, false);
+            pizarraCanvas.addEventListener('touchmove', TouchMove, false);
+            pizarraCanvas.addEventListener('touchend', TouchEnd, false);
+            pizarraCanvas.addEventListener('touchleave', TouchEnd, false);
+        }
+
+        function MouseDown(e) {
+            flag = true;
+            contexto.beginPath();
+            valX = e.clientX - posicionX(pizarraCanvas); valY = e.clientY - posicionY(pizarraCanvas);
+            contexto.moveTo(valX, valY);
+        }
+
+        function MouseUp(e) {
+            contexto.closePath();
+            flag = false;
+        }
+
+        function MouseMove(e) {
+            if (flag) {
+                contexto.beginPath();
+                contexto.moveTo(valX, valY);
+                valX = e.clientX - posicionX(pizarraCanvas); valY = e.clientY - posicionY(pizarraCanvas);
+                contexto.lineTo(valX, valY);
+                contexto.closePath();
+                contexto.stroke();
+            }
+        }
+
+        function TouchMove(e) {
+            e.preventDefault();
+            if (e.targetTouches.length == 1) {
+                var touch = e.targetTouches[0];
+                MouseMove(touch);
+            }
+        }
+
+        function TouchStart(e) {
+            if (e.targetTouches.length == 1) {
+                var touch = e.targetTouches[0];
+                MouseDown(touch);
+            }
+        }
+
+        function TouchEnd(e) {
+            if (e.targetTouches.length == 1) {
+                var touch = e.targetTouches[0];
+                MouseUp(touch);
+            }
+        }
+
+        function posicionY(obj) {
+            var valor = obj.offsetTop;
+            if (obj.offsetParent) valor += posicionY(obj.offsetParent);
+            return valor;
+        }
+
+        function posicionX(obj) {
+            var valor = obj.offsetLeft;
+            if (obj.offsetParent) valor += posicionX(obj.offsetParent);
+            return valor;
+        }
+
+        /* Limpiar pizarra */
+        function LimpiarTrazado() {
+            contexto = document.getElementById(idCanvas).getContext('2d');
+            contexto.fillStyle = colorDeFondo;
+            contexto.fillRect(0, 0, anchoCanvas, altoCanvas);
+        }
+
+        /* Enviar el trazado */
+        function GuardarTrazado() {
+            //graba la imagen en base64
+            imagen.value = document.getElementById(idCanvas).toDataURL('image/png');
+
+            if (firmaActual !== null) {
+                console.log(firmaActual);
+                if (firmaActual === "firma1") {
+                    firma1 = imagen.value;
+                    document.getElementById("firmaImagen1").src = firma1;
+                }
+                else if (firmaActual === "firma2") {
+                    firma2 = imagen.value;
+                    document.getElementById("firmaImagen2").src = firma2;
+                }
+                else if (firmaActual === "firma3") {
+                    firma3 = imagen.value;
+                    document.getElementById("firmaImagen3").src = firma3;
+                }
+            }
+            //alert(imagen.value);
+            $("#myModal").modal("hide");
+        }
+        //var totalGrandCell = $('#Total');
+        $('#btnAdd').click(function () {
+            //var $totalGrandCell = $('#Total');
+
+            var tbody = $('#tblproducto tbody');
+            var tr = $('<tr></tr>');
+            tr.append('<td>' + $('#txtNum_parte').val() + '</td>');
+            tr.append('<td>' + $('#txtDescripcion').val() + '</td>');
+            tr.append('<td>' + $('#txtNum_serie').val() + '</td>');
+            tr.append('<td>' + $('#txtCant_solic').val() + '</td>');
+            tr.append('<td>' + $('#txtCant_desp').val() + '</td>');
+            tr.append('<td>' + $('#txtCosto').val() + '</td>');
+            tr.append('<td class="orderTotalCell">' + getSubtotal($('#txtCant_desp').val(), $('#txtCosto').val()) + '</td>');
+            //tr.append('<td>' + $('#txtCant_desp').val() * $('#txtCosto').val() + '</td>');
+
+
+            tr.append('<td><input type="button" value="Quitar" class="btn btn-warning" onclick="Remove(this)"/></td>')
+
+            tbody.append(tr);
+            updateTotals();
+            var Num_parte = $("#txtNum_parte");
+            var Descripcion = $("#txtDescripcion");
+            var Num_serie = $("#txtNum_serie");
+            var Cant_solic = $("#txtCant_solic");
+            var Cant_desp = $("#txtCant_desp");
+            var Costo = $("#txtCosto");
+           
+            //$('#EmployeeId').val($('#txtCant_desp').val() * $('#txtCosto').val());
+            var Totaltbl = getSubtotal(Cant_desp, Costo);
+           
+        //$("#txtTotaltbl");
+
+            //Clear the TextBoxes.
+
+            Num_parte.val("");
+            Descripcion.val("");
+            Num_serie.val("");
+            Cant_solic.val("");
+            Cant_desp.val("");
+            Costo.val("");
+            //Totaltbl.val("");
+            document.getElementById("txtNum_parte").focus();
+        });
+        function updateTotals() {
+           
+            var totalOrder = getColumnTotal('.orderTotalCell');
+            $('#Total').val(totalOrder);
+        }
+        function getSubtotal(quantity, price) {
+            return (quantity * price).toFixed(2);
+        }
+        function getColumnTotal(selector) {
+            return Array.from($(selector)).reduce(sumReducer, 0);
+        }
+        function sumReducer(total, cell) {
+            return total += parseInt(cell.innerHTML, 10);
+        }
+        //function toMoney(number) {
+        //    return '$' + number.toFixed(2);
+        //}
+
+        function Remove(button) {
+            //Determine the reference of the Row using the Button.
+            var row = $(button).closest("TR");
+            var name = $("TD", row).eq(0).html();
+            if (confirm("Seguro desea eliminar: " + name + " ?")) {
+                //Get the reference of the Table.
+                var table = $("#tblproducto")[0];
+
+                //Delete the Table row using it's Index.
+                table.deleteRow(row[0].rowIndex);
+                updateTotals();
+            }
+        };
+
+        function Guardar() {
+            var dataprods = new Array();
+            $("#tblproducto TBODY TR").each(function () {
+                var row = $(this);
+                var dataprod = {};
+                dataprod.Num_parte = row.find("TD").eq(0).html();
+                dataprod.Descripcion = row.find("TD").eq(1).html();
+                dataprod.Num_serie = row.find("TD").eq(2).html();
+                dataprod.Cant_solic = row.find("TD").eq(3).html();
+                dataprod.Cant_desp = row.find("TD").eq(4).html();
+                dataprod.Costo = row.find("TD").eq(5).html();
+                dataprod.Totaltbl = row.find("TD").eq(6).html();
+
+                dataprods.push(dataprod);
+            });
+            let datos = {
+
+                Tipo_const: $('#tconstlist').val(),
+                Solicitado_por: $('#solicitadox').val(),
+                Departamento: $('#dept').val(),
+                Sucursal: $('#sucursal').val(),
+                Desde: $('#desde').val(),
+                Hacia: $('#hacia').val(),
+                Referencias: $('#referencia').val(),
+                Notas_inventario: $('#notas').val(),
+                TxtEntregadox: $('#TxtEntregadox').val(),
+                TxtRecibidox: $('#TxtRecibidox').val(),
+                TxtVerificadox: $('#TxtVerificadox').val(),
+                Total: $('#Total').val(),
+
+                Recibido_por: firma1,
+                Verificado_por: firma2,
+                Entregado_por: firma3,
+            }
+
+            //Send the JSON array to Controller using AJAX.
+            $.ajax({
+                type: "POST",
+                url: "Guardar",
+                //data: JSON.stringify(datos, dataprods),
+                data: JSON.stringify({ array1: datos, array2: dataprods }),
+                contentType: "application/json; charset=utf-8",
+
+                dataType: "json",
+                success: function (data) {
+                    
+                    //if (data.success == true) { // if true (1)
+                        alertify.success(data.rtn);
+                        setTimeout(function () {// wait for 5 secs(2)
+                            location.reload(); // then reload the page.(3)
+                        }, 2000);
+                    //}
+
+                }
+            });
+        }
+
+      
+
+    </script>
+
+}

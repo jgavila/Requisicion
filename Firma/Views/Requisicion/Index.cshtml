@@ -16,13 +16,11 @@
         position: relative;
     }
 </style>
-
-
+ 
 <script src="~/Scripts/alertify.min.js"></script>
 <link rel="stylesheet" href="~/Content/alertifyjs/alertify.min.css" />
 <link rel="stylesheet" href="~/Content/alertifyjs/themes/default.min.css" />
-
-
+ 
 @if (ViewBag.ticketDetail != null)
 {
     <!-- Trigger the modal with a button -->
@@ -71,12 +69,14 @@
         <table class="table table-hover">
             <thead>
                 <tr>
+                    <th style="text-align: center">*</th>
                     <th>ID Producto</th>
                     <th>Descripción</th>
                     <th>Cant Solicitada</th>
                     <th>Costo Unitario</th>
                     <th>Despachado</th>
                     <th>Costo Total</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -84,17 +84,19 @@
                     foreach (var row in ViewBag.productDetail)
                     {
                         <tr>
+                            <td style="text-align: center"><input type="checkbox" /></td>
                             <td>@row.ID_Producto</td>
                             <td>@row.Descripcion</td>
                             <td style="text-align: right">@row.Cant_Solicitada</td>
                             <td style="text-align: right">@row.Cost_Unitario</td>
                             <td style="text-align: right">@row.Despachado</td>
                             <td style="text-align: right">@row.Costo_Total</td>
+
                         </tr>
                     }
                     <tr>
 
-                        <th colspan="5">TOTAL FINAL</th>
+                        <th colspan="6">TOTAL FINAL</th>
                         <td style="text-align: right"> @ViewBag.Total</td>
 
                     </tr>
@@ -104,187 +106,189 @@
         </table>
 
     </div>
-    
-        <div class="panel-body">
 
-            <div class="row">
-                <div class="col-md-4 table-bordered">
-                    <center><img id="firmaImagen3" style="width: 350px;height: 135px;"/></center>
+    <div class="panel-body">
+
+        <div class="row">
+            <div class="col-md-4 table-bordered">
+                <center><img id="firmaImagen3" style="width: 350px;height: 135px;" /></center>
+                <br />
+
+                <center>
+                    <select id="entregado_por" name="select" class="form-control">
+                        <option></option>
+                        <option value="Johann Credidio">Johann Credidio</option>
+                        <option value="Alvin Headley">Alvin Headley</option>
+                        <option value="Kevin Navarro">Kevin Navarro</option>
+                        <option value="Nelson Cardenas">Nelson Cardenas</option>
+                        <option value="Isaac Vargas">Isaac Vargas</option>
+                        <option value="Diomedes Peralta">Diomedes Peralta</option>
+                    </select>
+
+                </center>
+                <br />
+                <center>
+                    <button id="firma3" type="button" class="btn btn-info btn-sm btn-block" style="padding: 7px;" data-toggle="modal" data-target="#myModal" onclick="setearFirmaActual(this)">ENTREGADO POR</button>
+                </center>
+                <br />
+
+            </div>
+            <div class="col-md-4 table-bordered">
+
+                <center><img id="firmaImagen2" style="width: 350px;height: 135px;" /></center>
+                <br />
+                <center>
+                    <select id="verificado_por" name="select" class="form-control">
+                        <option></option>
+                        <option value="Johann Credidio">Johann Credidio</option>
+                        <option value="Alvin Headley">Alvin Headley</option>
+                        <option value="Yasmina Ortega">Yasmina Ortega</option>
+                        <option value="Janeth Villamil">Janeth Villamil</option>
+
+                    </select>
+                </center>
+                <br />
+                <center>
+                    <button id="firma2" type="button" style="padding: 6px" class="btn btn-info btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="setearFirmaActual(this)">VERIFICADO POR</button>
+                </center>
+                <br />
+
+            </div>
+
+            <div class="col-md-4 table-bordered">
+                <center><img id="firmaImagen1" style="width: 350px;height: 135px;" /></center>
+                <br />
+                <div class="caption">
+                    <center><input id="recibido_por" type="text" class="form-control" name="recibido_por" placeholder="Firma en Texto"></center>
+
                     <br />
-
                     <center>
-                        <select id="entregado_por" name="select" class="form-control">
-                            <option></option>
-                            <option value="Johann Credidio">Johann Credidio</option>
-                            <option value="Alvin Headley">Alvin Headley</option>
-                            <option value="Kevin Navarro">Kevin Navarro</option>
-                            <option value="Edmundo López">Edmundo López</option>
-                        </select>
-
+                        <button id="firma1" type="button" style="padding: 6px" class="btn btn-info btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="setearFirmaActual(this)">RECIBIDO POR</button>
                     </center>
                     <br />
-                    <center>
-                        <button id="firma3" type="button" class="btn btn-info btn-sm btn-block" style="padding: 7px;" data-toggle="modal" data-target="#myModal" onclick="setearFirmaActual(this)">ENTREGADO POR</button>
-                    </center>
-                    <br />
-
-                </div>
-                <div class="col-md-4 table-bordered">
-
-                    <center><img id="firmaImagen2" style="width: 350px;height: 135px;"/></center>
-                    <br />
-                    <center>
-                        <select id="verificado_por" name="select" class="form-control">
-                            <option></option>
-                            <option value="Johann Credidio">Johann Credidio</option>
-                            <option value="Alvin Headley">Alvin Headley</option>
-                            <option value="Yasmina Ortega">Yasmina Ortega</option>
-                            <option value="Janeth Villamil">Janeth Villamil</option>
-
-                        </select>
-                    </center>
-                    <br />
-                    <center>
-                        <button id="firma2" type="button" style="padding: 6px" class="btn btn-info btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="setearFirmaActual(this)">VERIFICADO POR</button>
-                    </center>
-                    <br />
-
-                </div>
-
-                <div class="col-md-4 table-bordered">
-                    <center><img id="firmaImagen1" style="width: 350px;height: 135px;"/></center>
-                    <br />
-                    <div class="caption">
-                        <center><input id="recibido_por" type="text" class="form-control" name="recibido_por" placeholder="Firma en Texto"></center>
-
-                        <br />
-                        <center>
-                            <button id="firma1" type="button" style="padding: 6px" class="btn btn-info btn-sm btn-block" data-toggle="modal" data-target="#myModal" onclick="setearFirmaActual(this)">RECIBIDO POR</button>
-                        </center>
-                        <br />
-                    </div>
                 </div>
             </div>
-            
-                <div class="row">
-
-                    <h4>
-                        <span><strong>Fecha/Hora: <span id="datetime"></span></strong></span>
-                    </h4>
-                </div>
-
-                <br />
-                <div class="row">
-                    <span>
-                        <button id="guardar" type="button" class="btn btn-success" onclick="guardar()" style="padding-right: 60px;padding-left: 60px;">Guardar</button>
-                        <button id="imprimir" type="button" class="btn btn-success" disabled="disabled" onclick="imprimir()" style="padding-right: 60px;padding-left: 60px;">Descargar</button>
-                    </span>
-                </div>
         </div>
-    
-                <!-- Modal de la firma-->
-                <div id="myModal" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">TECNASA S.A</h4>
-                            </div>
-                            <div id="modal-contenido" class="modal-body">
 
-                                <div class='centrador'>
-                                    <p>FIRMA</p>
-                                    <button type='button' class="btn btn-danger" onclick='LimpiarTrazado()'>Limpiar Pizarra</button>
-                                    <button type='button' class="btn btn-success" onclick='GuardarTrazado()'>Guardar</button>
-                                    <input type='hidden' name='imagen' id='imagen' />
-                                </div>
-                                <div class='centrador'>
-                                    <canvas id='canvas' class="canvasStyle" width="500" height="200" style="width:500px; height:200px">
-                                        <p>Tu navegador no soporta canvas</p>
-                                    </canvas>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
+        <div class="row">
+
+            <h4>
+                <span><strong>Fecha/Hora: <span id="datetime"></span></strong></span>
+            </h4>
+        </div>
+
+        <br />
+        <div class="row">
+            <span>
+                <button id="guardar" type="button" class="btn btn-success" onclick="guardar()" style="padding-right: 60px;padding-left: 60px;">Guardar</button>
+                <button id="imprimir" type="button" class="btn btn-success" disabled="disabled" onclick="imprimir()" style="padding-right: 60px;padding-left: 60px;">Descargar</button>
+            </span>
+        </div>
+    </div>
+
+    <!-- Modal de la firma-->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">TECNASA S.A</h4>
+                </div>
+                <div id="modal-contenido" class="modal-body">
+
+                    <div class='centrador'>
+                        <p>FIRMA</p>
+                        <button type='button' class="btn btn-danger" onclick='LimpiarTrazado()'>Limpiar Pizarra</button>
+                        <button type='button' class="btn btn-success" onclick='GuardarTrazado()'>Guardar</button>
+                        <input type='hidden' name='imagen' id='imagen' />
+                    </div>
+                    <div class='centrador'>
+                        <canvas id='canvas' class="canvasStyle" width="500" height="200" style="width:500px; height:200px">
+                            <p>Tu navegador no soporta canvas</p>
+                        </canvas>
                     </div>
                 </div>
-                }
-                else
-                {
-                <style>
-                    input[type='number'] {
-                        -moz-appearance: textfield;
-                    }
-
-                    input::-webkit-outer-spin-button,
-                    input::-webkit-inner-spin-button {
-                        -webkit-appearance: none;
-                    }
-                </style>
-                <div class="container">
-
-                    <center><img src="~/Content/img/teclogo.png" style="width:80%"></center>
-                    <form id="formularioBusqueda" method="get">
-                        <center>
-                            <input type="number" id="txtbuscar" name="ticket" autocomplete="off" class="form-control" placeholder="Introduzca el numero de Ticket">
-                            <br />
-                            <span>
-                                <button id="btnForm" class="btn btn-info" type="button" style="width:250px;height:35px" onclick="verificarAntesDeBuscar()">BUSCAR</button>
-                                <button id="btnSubmit" class="btn btn-info" type="submit" style="width:250px;height:35px; display: none;">btn invisible</button>
-                            </span>
-
-                        </center>
-
-                    </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <style>
+        input[type='number'] {
+            -moz-appearance: textfield;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+    </style>
+    <div class="container">
+
+        <center><img src="~/Content/img/teclogo.png" style="width:80%"></center>
+        <form id="formularioBusqueda" method="get">
+            <center>
+                <input type="number" id="txtbuscar" name="ticket" autocomplete="off" class="form-control" placeholder="Introduzca el numero de Ticket">
+                <br />
+                <span>
+                    <button id="btnForm" class="btn btn-info" type="button" style="width:250px;height:35px" onclick="verificarAntesDeBuscar()">BUSCAR</button>
+                    <button id="btnSubmit" class="btn btn-info" type="submit" style="width:250px;height:35px; display: none;">btn invisible</button>
+                </span>
+
+            </center>
+
+        </form>
+    </div>
 
 
-                <script>
+    <script>
 
-                    /*
-                     * ESTO E S JQUERY,  no funciona en esta linea de código aún
-                    $('#txtbuscar').on('keyup keypress', function (e) {
-                        var keyCode = e.keyCode || e.which;
-                        if (keyCode === 13) {
-                            e.preventDefault();
-                            return false;
-                        }
-                    });
-                    */
-                    //previene que dispare el submit cuando presiona enter en el input : txtBuscar
-                    document.getElementById('txtbuscar').addEventListener('keypress', function (event) {
-                        //el codigo 13 es ENTER
-                        if (event.keyCode == 13) {
-                            event.preventDefault();
-                        }
-                    });
-
-
-                    var inputBox = document.getElementById("txtbuscar");
-
-                    var invalidChars = [
-                        "-",
-                        "+",
-                        "e",
-                    ];
-
-                    inputBox.addEventListener("input", function () {
-                        this.value = this.value.replace(/[e\+\-]/gi, "");
-                    });
-
-                    inputBox.addEventListener("keydown", function (e) {
-                        if (invalidChars.includes(e.key)) {
-                            e.preventDefault();
-                        }
-                    });
-                </script>
-                }
+        /*
+         * ESTO E S JQUERY,  no funciona en esta linea de código aún
+        $('#txtbuscar').on('keyup keypress', function (e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        */
+        //previene que dispare el submit cuando presiona enter en el input : txtBuscar
+        document.getElementById('txtbuscar').addEventListener('keypress', function (event) {
+            //el codigo 13 es ENTER
+            if (event.keyCode == 13) {
+                event.preventDefault();
+            }
+        });
 
 
-                <script>
+        var inputBox = document.getElementById("txtbuscar");
+
+        var invalidChars = [
+            "-",
+            "+",
+            "e",
+        ];
+
+        inputBox.addEventListener("input", function () {
+            this.value = this.value.replace(/[e\+\-]/gi, "");
+        });
+
+        inputBox.addEventListener("keydown", function (e) {
+            if (invalidChars.includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+}
+
+
+<script>
     async function getJson(url, data) {
         let response = await fetch(url, {
             headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -313,10 +317,13 @@
             botonSubmit.click();
         }
     }
-                </script>
 
-                @section scripts {
-                    <script>
+
+
+</script>
+
+@section scripts {
+    <script>
 
         var firmaActual = null;
         var firma1 = null;
@@ -565,8 +572,8 @@
 
 
 
-                    </script>
+    </script>
 
 
 
-                }
+}

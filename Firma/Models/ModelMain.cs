@@ -93,5 +93,8 @@ namespace Firma.Models
                 return this.Database.SqlQuery<SP_ShowProductDetailResult>("EXEC [dbo].[SP_ShowProductDetail] @ticket = @p0", ticket).ToList();
           
         }
+
+      
+
     }
 }

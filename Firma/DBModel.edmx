@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CWRevolutionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Req_Desp_Detail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ncons" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Num_parte" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Num_serie" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cant_solic" Type="int" Nullable="false" />
+          <Property Name="Cant_desp" Type="int" Nullable="false" />
+          <Property Name="Costo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Totaltbl" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Req_Desp_Header">
+          <Key>
+            <PropertyRef Name="Ncons" />
+          </Key>
+          <Property Name="Ncons" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tipo_const" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Solicitado_por" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Departamento" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sucursal" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Desde" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Hacia" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Referencias" Type="nvarchar(max)" />
+          <Property Name="Notas_inventario" Type="nvarchar(max)" />
+          <Property Name="TxtEntregadox" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TxtVerificadox" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TxtRecibidox" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Entregado_por" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Verificado_por" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Recibido_por" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Req_Rebaja_Detail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ncons" Type="nvarchar" MaxLength="255" />
+          <Property Name="Stringkey" Type="nvarchar" MaxLength="255" />
+          <Property Name="ticket" Type="nvarchar" MaxLength="255" />
+          <Property Name="Cliente" Type="nvarchar" MaxLength="255" />
+          <Property Name="Num_Parte" Type="nvarchar" MaxLength="255" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="Bodega_Rebaja" Type="nvarchar" MaxLength="255" />
+          <Property Name="Cant_Solicitada" Type="int" />
+          <Property Name="Cant_Despachada" Type="int" />
+          <Property Name="Costo_Unitario" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Costo_Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Fecha_Shipping" Type="datetime" />
+          <Property Name="Hecho_Por" Type="nvarchar" MaxLength="255" />
+          <Property Name="Contrato" Type="nvarchar" MaxLength="255" />
+          <Property Name="Proyecto" Type="nvarchar" MaxLength="255" />
+          <Property Name="Bin" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Req_Rebaja_Header">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ncons" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FechaIn" Type="datetime" />
+          <Property Name="FechaFi" Type="datetime" />
+          <Property Name="Departamento" Type="nvarchar" MaxLength="255" />
+          <Property Name="Detalle_Gasto" Type="nvarchar" MaxLength="255" />
+          <Property Name="Cuenta_Cargar" Type="nvarchar" MaxLength="255" />
+          <Property Name="Fecha_Rep" Type="datetime" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <Function Name="SP_Req_MRebaja" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start_date" Type="datetime" Mode="In" />
+          <Parameter Name="end_date" Type="datetime" Mode="In" />
+          <Parameter Name="Dept" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="CWRevolutionModelStoreContainer">
+          <EntitySet Name="Req_Desp_Detail" EntityType="Self.Req_Desp_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Req_Desp_Header" EntityType="Self.Req_Desp_Header" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Req_Rebaja_Detail" EntityType="Self.Req_Rebaja_Detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Req_Rebaja_Header" EntityType="Self.Req_Rebaja_Header" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CWRevolutionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Req_Desp_Detail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Ncons" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Num_parte" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Num_serie" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cant_solic" Type="Int32" Nullable="false" />
+          <Property Name="Cant_desp" Type="Int32" Nullable="false" />
+          <Property Name="Costo" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Totaltbl" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Req_Desp_Header">
+          <Key>
+            <PropertyRef Name="Ncons" />
+          </Key>
+          <Property Name="Ncons" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tipo_const" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Solicitado_por" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Departamento" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sucursal" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Desde" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Hacia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Referencias" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Notas_inventario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Entregado_por" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Verificado_por" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Recibido_por" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TxtEntregadox" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TxtVerificadox" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TxtRecibidox" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Req_Rebaja_Detail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ncons" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Stringkey" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ticket" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Cliente" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Num_Parte" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Bodega_Rebaja" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Cant_Solicitada" Type="Int32" />
+          <Property Name="Cant_Despachada" Type="Int32" />
+          <Property Name="Costo_Unitario" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Costo_Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Fecha_Shipping" Type="DateTime" Precision="3" />
+          <Property Name="Hecho_Por" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Contrato" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Proyecto" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Bin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Req_Rebaja_Header">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ncons" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaIn" Type="DateTime" Precision="3" />
+          <Property Name="FechaFi" Type="DateTime" Precision="3" />
+          <Property Name="Departamento" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Detalle_Gasto" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Cuenta_Cargar" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Fecha_Rep" Type="DateTime" Precision="3" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="CWRevolutionEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Req_Desp_Detail" EntityType="Self.Req_Desp_Detail" />
+          <EntitySet Name="Req_Desp_Header" EntityType="Self.Req_Desp_Header" />
+          <EntitySet Name="Req_Rebaja_Detail" EntityType="Self.Req_Rebaja_Detail" />
+          <EntitySet Name="Req_Rebaja_Header" EntityType="Self.Req_Rebaja_Header" />
+          <FunctionImport Name="SP_Req_MRebaja" ReturnType="Collection(CWRevolutionModel.SP_Req_MRebaja_Result)">
+            <Parameter Name="start_date" Mode="In" Type="DateTime" />
+            <Parameter Name="end_date" Mode="In" Type="DateTime" />
+            <Parameter Name="Dept" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SP_Req_MRebaja_Result">
+          <Property Type="Int32" Name="C__de_Ticket" Nullable="true" />
+          <Property Type="String" Name="Stringkey" Nullable="false" MaxLength="48" />
+          <Property Type="String" Name="Cliente" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Item_Id" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Descripcion_Producto" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Departamento" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Cantidad" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Costo_Unitario" Nullable="true" Precision="18" Scale="6" />
+          <Property Type="Decimal" Name="Costo_Total" Nullable="true" Precision="37" Scale="8" />
+          <Property Type="String" Name="Bodega" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Bin" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Contrato" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Quantity_Picked" Nullable="true" />
+          <Property Type="Int32" Name="Quantity_Shipped" Nullable="true" />
+          <Property Type="DateTime" Name="Fecha_Shipping" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Proyecto" Nullable="true" MaxLength="121" />
+          <Property Type="String" Name="Summary_Ticket" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Board" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Configuracion" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Numero_Serie" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="Modelo" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Oportunidad" Nullable="true" />
+          <Property Type="DateTime" Name="Fecha_Creacion" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="Fecha_Cierre" Nullable="true" Precision="23" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CWRevolutionModelStoreContainer" CdmEntityContainer="CWRevolutionEntities">
+          <EntitySetMapping Name="Req_Desp_Detail">
+            <EntityTypeMapping TypeName="CWRevolutionModel.Req_Desp_Detail">
+              <MappingFragment StoreEntitySet="Req_Desp_Detail">
+                <ScalarProperty Name="Totaltbl" ColumnName="Totaltbl" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ncons" ColumnName="Ncons" />
+                <ScalarProperty Name="Num_parte" ColumnName="Num_parte" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Num_serie" ColumnName="Num_serie" />
+                <ScalarProperty Name="Cant_solic" ColumnName="Cant_solic" />
+                <ScalarProperty Name="Cant_desp" ColumnName="Cant_desp" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Req_Desp_Header">
+            <EntityTypeMapping TypeName="CWRevolutionModel.Req_Desp_Header">
+              <MappingFragment StoreEntitySet="Req_Desp_Header">
+                <ScalarProperty Name="TxtRecibidox" ColumnName="TxtRecibidox" />
+                <ScalarProperty Name="TxtVerificadox" ColumnName="TxtVerificadox" />
+                <ScalarProperty Name="TxtEntregadox" ColumnName="TxtEntregadox" />
+                <ScalarProperty Name="Ncons" ColumnName="Ncons" />
+                <ScalarProperty Name="Tipo_const" ColumnName="Tipo_const" />
+                <ScalarProperty Name="Solicitado_por" ColumnName="Solicitado_por" />
+                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+                <ScalarProperty Name="Sucursal" ColumnName="Sucursal" />
+                <ScalarProperty Name="Desde" ColumnName="Desde" />
+                <ScalarProperty Name="Hacia" ColumnName="Hacia" />
+                <ScalarProperty Name="Referencias" ColumnName="Referencias" />
+                <ScalarProperty Name="Notas_inventario" ColumnName="Notas_inventario" />
+                <ScalarProperty Name="Entregado_por" ColumnName="Entregado_por" />
+                <ScalarProperty Name="Verificado_por" ColumnName="Verificado_por" />
+                <ScalarProperty Name="Recibido_por" ColumnName="Recibido_por" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Req_Rebaja_Detail">
+            <EntityTypeMapping TypeName="CWRevolutionModel.Req_Rebaja_Detail">
+              <MappingFragment StoreEntitySet="Req_Rebaja_Detail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Ncons" ColumnName="Ncons" />
+                <ScalarProperty Name="Stringkey" ColumnName="Stringkey" />
+                <ScalarProperty Name="ticket" ColumnName="ticket" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="Num_Parte" ColumnName="Num_Parte" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Bodega_Rebaja" ColumnName="Bodega_Rebaja" />
+                <ScalarProperty Name="Cant_Solicitada" ColumnName="Cant_Solicitada" />
+                <ScalarProperty Name="Cant_Despachada" ColumnName="Cant_Despachada" />
+                <ScalarProperty Name="Costo_Unitario" ColumnName="Costo_Unitario" />
+                <ScalarProperty Name="Costo_Total" ColumnName="Costo_Total" />
+                <ScalarProperty Name="Fecha_Shipping" ColumnName="Fecha_Shipping" />
+                <ScalarProperty Name="Hecho_Por" ColumnName="Hecho_Por" />
+                <ScalarProperty Name="Contrato" ColumnName="Contrato" />
+                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+                <ScalarProperty Name="Bin" ColumnName="Bin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Req_Rebaja_Header">
+            <EntityTypeMapping TypeName="CWRevolutionModel.Req_Rebaja_Header">
+              <MappingFragment StoreEntitySet="Req_Rebaja_Header">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Ncons" ColumnName="Ncons" />
+                <ScalarProperty Name="FechaIn" ColumnName="FechaIn" />
+                <ScalarProperty Name="FechaFi" ColumnName="FechaFi" />
+                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+                <ScalarProperty Name="Detalle_Gasto" ColumnName="Detalle_Gasto" />
+                <ScalarProperty Name="Cuenta_Cargar" ColumnName="Cuenta_Cargar" />
+                <ScalarProperty Name="Fecha_Rep" ColumnName="Fecha_Rep" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_Req_MRebaja" FunctionName="CWRevolutionModel.Store.SP_Req_MRebaja">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CWRevolutionModel.SP_Req_MRebaja_Result">
+                <ScalarProperty Name="C__de_Ticket" ColumnName="# de Ticket" />
+                <ScalarProperty Name="Stringkey" ColumnName="Stringkey" />
+                <ScalarProperty Name="Cliente" ColumnName="Cliente" />
+                <ScalarProperty Name="Item_Id" ColumnName="Item_Id" />
+                <ScalarProperty Name="Descripcion_Producto" ColumnName="Descripcion_Producto" />
+                <ScalarProperty Name="Departamento" ColumnName="Departamento" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Costo_Unitario" ColumnName="Costo_Unitario" />
+                <ScalarProperty Name="Costo_Total" ColumnName="Costo_Total" />
+                <ScalarProperty Name="Bodega" ColumnName="Bodega" />
+                <ScalarProperty Name="Bin" ColumnName="Bin" />
+                <ScalarProperty Name="Contrato" ColumnName="Contrato" />
+                <ScalarProperty Name="Quantity_Picked" ColumnName="Quantity Picked" />
+                <ScalarProperty Name="Quantity_Shipped" ColumnName="Quantity Shipped" />
+                <ScalarProperty Name="Fecha_Shipping" ColumnName="Fecha_Shipping" />
+                <ScalarProperty Name="Proyecto" ColumnName="Proyecto" />
+                <ScalarProperty Name="Summary_Ticket" ColumnName="Summary_Ticket" />
+                <ScalarProperty Name="Board" ColumnName="Board" />
+                <ScalarProperty Name="Configuracion" ColumnName="Configuracion" />
+                <ScalarProperty Name="Numero_Serie" ColumnName="Numero_Serie" />
+                <ScalarProperty Name="Modelo" ColumnName="Modelo" />
+                <ScalarProperty Name="Oportunidad" ColumnName="Oportunidad" />
+                <ScalarProperty Name="Fecha_Creacion" ColumnName="Fecha_Creacion" />
+                <ScalarProperty Name="Fecha_Cierre" ColumnName="Fecha_Cierre" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
